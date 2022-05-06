@@ -1,0 +1,56 @@
+﻿@model SV18T1021130.Web.Models.CategoryPaginationResultModel
+@{
+    Layout = null;
+}
+
+<div class="row" style="margin: 10px 0 10px 0">
+    <div class="col-sm-12">
+        <span>Có <strong>@Model.RowCount</strong> loại hàng trong tống số <strong>@Model.PageCount</strong> trang</span>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr class="bg-primary">
+                <th>Tên loại hàng</th>
+                <th>Mô tả</th>
+                <th style="width:75px">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>@item.CategoryName</td>
+                    <td>@item.Description</td>
+                    <td class="text-right">
+                        <a href="~/category/edit/@item.CategoryID" class="btn btn-xs btn-flat btn-info">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="~/category/delete/@item.CategoryID" class="btn btn-xs btn-flat btn-danger">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="box-footer text-center">
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            if (Model.Page == i)
+            {
+                <li class="active"><a href="#">@i</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:;" onclick="doSearch(@i)">@i</a></li>
+            }
+        }
+    </ul>
+</div>

@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Tra cứu đơn hàng";
+}
+
+<div class="container-fluid">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+            <form action="#" method="get">
+                <div class="input-group">
+                    <input type="text" name="searchValue" class="form-control" placeholder="Nhập mã hóa đơn cần tìm">
+                    <span class="input-group-btn">
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat btn-info">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <a href="~/order/create" class="btn btn-flat btn-primary" style="margin-left: 5px">
+                            <i class="fa fa-plus"></i> Bổ sung
+                        </a>
+                    </span>
+                </div>
+            </form>
+            <div class="row" style="margin: 10px 0 10px 0">
+                <div class="col-sm-12">
+                    <span>Có <strong>100</strong> hóa đơn trong tống số <strong>10</strong> trang</span>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr class="bg-primary">
+                            <th>Mã khách hàng</th>
+                            <th>Thời gian đặt hàng</th>
+                            <th>Mã nhân viên</th>
+                            <th>Thời gian chấp nhận</th>
+                            <th>Mã người giao hàng</th>
+                            <th>Thời gian giao hàng</th>
+                            <th>Thời gian hoàn thành</th>
+                            <th>Trạng thái</th>
+                            <th style="width:75px">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 1; i <= 10; i++)
+                        {
+                            <tr>
+                                <td>01</td>
+                                <td>2020-07-04 00:00:00.000</td>
+                                <td>1</td>
+                                <td>2020-07-04 12:00:00.000</td>
+                                <td>2</td>
+                                <td>2020-07-05 00:00:00.000</td>
+                                <td>2020-07-07 00:00:00.000</td>
+                                <td>4</td>
+                                <td class="text-right" style="min-width: 100px">
+                                    <a href="~/order/details/123" class="btn btn-xs btn-flat btn-default">
+                                        <i class="fa fa-list"></i>
+                                    </a>
+                                    <a href="~/order/edit/123" class="btn btn-xs btn-flat btn-info">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="~/customer/delete/123" class="btn btn-xs btn-flat btn-danger">
+                                        <i class="fa fa-remove"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer text-center">
+            <ul class="pagination">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">5</a></li>
+            </ul>
+        </div>
+        <!-- /.box-footer-->
+    </div>
+</div>

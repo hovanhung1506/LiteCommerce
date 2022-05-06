@@ -1,0 +1,70 @@
+﻿@model SV18T1021130.Web.Models.PaginationSearchInput
+@{
+    ViewBag.Title = "Nhà cung cấp";
+}
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+    </div>
+    <div class="box-body">
+        <form action="~/supplier/search" id="searchInput">
+            @Html.HiddenFor(m => m.PageSize)
+            <div class="input-group">
+                <input type="text" name="searchValue" class="form-control" placeholder="Nhập tên tên nhà cung cấp" autofocus value="@Model.SearchValue">
+                <span class="input-group-btn">
+                    <button type="submit" id="search-btn" class="btn btn-flat btn-info">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <a href="~/supplier/create" class="btn btn-flat btn-primary" style="margin-left: 5px">
+                        <i class="fa fa-plus"></i> Bổ sung
+                    </a>
+                </span>
+            </div>
+        </form>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            doSearch(@Model.Page);
+            $("#searchInput").submit(function (e) {
+                e.preventDefault();
+                doSearch(1);
+                return false;
+            })
+        });
+    </script>
+}
+
+
+
+@*@if (Model.SearchValue != null && Model.SearchValue != "")
+    {
+        <script>
+            history.pushState({}, "", "/supplier?searchValue=@Model.SearchValue")
+        </script>
+    }
+    <script>
+        var currentLocation = window.location.href
+        var url = new URL(currentLocation)
+        if (url.searchParams.get("searchValue") !== null) {
+            var len = url.searchParams.get("searchValue").length
+            var search = url.search.split('=')[1]
+            //if (search.length == 0) {
+            //    history.pushState({}, "", "/supplier")
+            //}
+            if (url.searchParams.get('searchValue').includes(' ', 0)) {
+                let s = 0
+                for (let i = 0; i < len; i++) {
+                    if (search[i] === '+')
+                        s++
+                }
+                if (s === len) {
+                    history.pushState({}, "", "/supplier?searchValue=")
+                    //history.pushState({}, "", "/supplier")
+                }
+            }
+        }
+    </script>*@
