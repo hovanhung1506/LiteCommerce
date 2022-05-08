@@ -113,26 +113,19 @@ namespace SV18T1021130.Web.Controllers
             if (model.CategoryID > 0)
             {
                 CommonDataService.UpdateCategory(model);
-                Session["cate"] = model;
+                model = CommonDataService.GetCategory(model.CategoryID);
             }
             else
             {
                 CommonDataService.AddCategory(model);
-                int rowCount = 0;
-                var list = CommonDataService.ListOfCategories(1, 0, "", out rowCount).ToArray();
-
-                int index = 0, max = list[0].CategoryID;
-                for(int i = 0; i < list.Length; i++)
-                {
-                    if(max < list[i].CategoryID)
-                    {
-                        max = list[i].CategoryID;
-                        index = i;
-                    }
-                }
-                Session["cate"] = list[index];
             }
-                
+            Models.PaginationSearchInput input = new PaginationSearchInput()
+            {
+                Page = 1,
+                PageSize = 10,
+                SearchValue = model.CategoryName
+            };
+            Session["CATEGORY_SEARCH"] = input;
             return RedirectToAction("Index");
         }
 

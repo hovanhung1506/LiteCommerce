@@ -68,7 +68,7 @@ namespace SV18T1021130.DataLayer.SQLServer
                                     FROM Employees
                                     WHERE (@searchValue = N'')
                                           OR ((Email LIKE @searchValue)
-                                              OR LastName + N' ' + FirstName LIKE @searchValue);";
+                                              OR FirstName + N' ' + LastName LIKE @searchValue);";
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Connection = cn;
                 cmd.Parameters.AddWithValue("@searchValue", searchValue);
@@ -174,7 +174,7 @@ namespace SV18T1021130.DataLayer.SQLServer
                                           FROM Employees
                                           WHERE (@searchValue = N'')
                                                 OR ((Email LIKE @searchValue)
-                                                    OR (LastName + N' ' + FirstName LIKE @searchValue))) AS t
+                                                    OR (FirstName + N' ' + LastName LIKE @searchValue))) AS t
                                     WHERE t.RowNumber
                                     BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize
                                     ORDER BY t.RowNumber;";

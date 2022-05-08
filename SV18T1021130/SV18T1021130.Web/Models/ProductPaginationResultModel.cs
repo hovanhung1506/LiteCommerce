@@ -9,7 +9,5 @@ namespace SV18T1021130.Web.Models
     public class ProductPaginationResultModel : PaginationResultModel
     {
         public List<Product> Products { get; set; }
-        public List<Category> Categories { get; set; }
-        public List<Supplier> Suppliers { get; set; }
     }
 }

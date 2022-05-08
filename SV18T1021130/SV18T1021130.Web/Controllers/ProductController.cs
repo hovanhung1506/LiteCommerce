@@ -1,5 +1,6 @@
 ﻿using SV18T1021130.BusinessLayer;
 using SV18T1021130.DomainModel;
+using SV18T1021130.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,27 +21,51 @@ namespace SV18T1021130.Web.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index(int page = 1, int category = 0, int supplier = 0, string searchValue = "")
+        public ActionResult Index()
         {
-            int pageSize = 10;
+            ProductSearchInput model = Session["PRODUCT_SEARCH"] as ProductSearchInput;
             int rowCount = 0;
-            searchValue = searchValue.Trim();
-            var categories = CommonDataService.ListOfCategories(page, 0, "", out rowCount);
-            var suppliers = CommonDataService.ListOfSuppliers(page, 0, "", out rowCount);
-            var products = CommonProductService.ListOfPrudcts(page, pageSize, category, supplier, searchValue, out rowCount);
-
-            Models.ProductPaginationResultModel model = new Models.ProductPaginationResultModel
+            var categories = CommonDataService.ListOfCategories(1, 0, "", out rowCount);
+            var suppliers = CommonDataService.ListOfSuppliers(1, 0, "", out rowCount);
+            if (model == null)
             {
-                Page = page,
-                PageSize = pageSize,
-                RowCount = rowCount,
-                SearchValue = searchValue,
+                model = new ProductSearchInput()
+                {
+                    Categories = categories,
+                    Suppliers = suppliers,
+                    CategoryID = 0,
+                    SupplierID = 0,
+                    Page = 1,
+                    PageSize = 10,
+                    SearchValue = "",
+                };
+            }
+            else
+            {
+                model.Categories = categories;
+                model.Suppliers = suppliers;
+            }
+            return View(model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public ActionResult Search(Models.ProductSearchInput input)
+        {
+            int rowCount = 0;
+            var products = CommonProductService.ListOfPrudcts(input.Page, input.PageSize, input.CategoryID, input.SupplierID, input.SearchValue, out rowCount);
+            ProductPaginationResultModel model = new ProductPaginationResultModel()
+            {
+                Page = input.Page,
+                PageSize = input.PageSize,
                 Products = products,
-                Categories = categories,
-                Suppliers = suppliers
+                RowCount = rowCount,
+                SearchValue = input.SearchValue
             };
-            ViewBag.Category = category;
-            ViewBag.Supplier = supplier;
+            Session["PRODUCT_SEARCH"] = input;
             return View(model);
         }
 
@@ -237,6 +262,8 @@ namespace SV18T1021130.Web.Controllers
                 {
                     ModelState.AddModelError("Price", "Giá không hợp lệ");
                 }
+            if (uploadPhoto == null && model.ProductID == 0)
+                ModelState.AddModelError("Photo", "Ảnh không được để trống");
             if (!ModelState.IsValid)
                 return View("Create", model);
             if (uploadPhoto != null)
@@ -249,8 +276,6 @@ namespace SV18T1021130.Web.Controllers
             }
             if (model.ProductID == 0)
             {
-                if (uploadPhoto == null)
-                    model.Photo = "";
                 CommonProductService.AddProduct(model);
             }
             else
@@ -266,17 +291,17 @@ namespace SV18T1021130.Web.Controllers
                         CommonDataService.DeleteImage(filePath);
                     }
                 }
-                else
-                {
-                    if (string.IsNullOrEmpty(p.Photo))
-                        model.Photo = "";
-                }
-
                 CommonProductService.UpdateProduct(model);
                 model = CommonProductService.GetProduct(model.ProductID);
                 Session["product"] = model;
             }
-
+            ProductSearchInput input = new ProductSearchInput()
+            {
+                Page = 1,
+                PageSize = 10,
+                SearchValue = model.ProductName
+            };
+            Session["PRODUCT_SEARCH"] = input;
             return RedirectToAction("Index");
         }
 
@@ -302,6 +327,8 @@ namespace SV18T1021130.Web.Controllers
                 ModelState.AddModelError("Description", "Mô tả không được để trống");
             if (model.DisplayOrder <= 0)
                 ModelState.AddModelError("DisplayOrder", "Thứ tự hiển thị phải lớn hơn 0");
+            if (uploadPhoto == null && model.PhotoID == 0)
+                ModelState.AddModelError("Photo", "Ảnh không được để trống");
             if (!ModelState.IsValid)
                 return View("Photo", model);
 
@@ -351,6 +378,62 @@ namespace SV18T1021130.Web.Controllers
             else
                 CommonProductService.UpdateProductAttribute(model);
             return RedirectToAction("edit/" + model.ProductID);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Route("{type}/{id}")]
+        public ActionResult Redirect(string type, int id)
+        {
+            ProductSearchInput input = Session["PRODUCT_SEARCH"] as ProductSearchInput;
+            switch (type)
+            {
+                case "supplier":
+                    if (input == null)
+                    {
+                        input = new ProductSearchInput()
+                        {
+                            SupplierID = id,
+                            Page = 1,
+                            PageSize = 10,
+                            SearchValue = "",
+                            CategoryID = 0
+                        };
+                    }
+                    else
+                    {
+                        input.CategoryID = 0;
+                        input.SupplierID = id;
+                    }
+                    Session["PRODUCT_SEARCH"] = input;
+                    break;
+                case "category":
+                    if (input == null)
+                    {
+                        input = new ProductSearchInput()
+                        {
+                            SupplierID = 0,
+                            Page = 1,
+                            PageSize = 10,
+                            SearchValue = "",
+                            CategoryID = id
+                        };
+                    }
+                    else
+                    {
+                        input.SupplierID = 0;
+                        input.CategoryID = id;
+                    }
+                    Session["PRODUCT_SEARCH"] = input;
+                    break;
+                default:
+                    return RedirectToAction("Index");
+            }
+            return RedirectToAction("Index");
         }
     }
 }

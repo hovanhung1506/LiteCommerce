@@ -1,4 +1,4 @@
-﻿@model SV18T1021130.Web.Models.ProductPaginationResultModel
+﻿@model SV18T1021130.Web.Models.ProductSearchInput
 @{
     ViewBag.Title = "Mặt hàng";
 }
@@ -7,23 +7,24 @@
     <div class="box-header with-border ">
     </div>
     <div class="box-body">
-        <form action="~/product" method="get">
+        <form action="~/product/search" id="searchInput">
+            @Html.HiddenFor(m => m.PageSize)
             <div class="row">
                 <div class="col-sm-3">
-                    <select class="form-control" name="category">
+                    <select class="form-control" name="categoryID">
                         <option value="0">-- Loại hàng --</option>
                         @foreach (var item in Model.Categories)
                         {
-                            <option value="@item.CategoryID" @Html.Raw(ViewBag.Category == item.CategoryID ? "selected" : "")>@item.CategoryName</option>
+                            <option value="@item.CategoryID" @Html.Raw(Model.CategoryID == item.CategoryID ? "selected" : "")>@item.CategoryName</option>
                         }
                     </select>
                 </div>
                 <div class="col-sm-3" style="margin-left: -15px">
-                    <select class="form-control" name="supplier">
+                    <select class="form-control" name="supplierID">
                         <option value="0">-- Nhà cung cấp --</option>
                         @foreach (var item in Model.Suppliers)
                         {
-                            <option value="@item.SupplierID" @Html.Raw(ViewBag.Supplier == item.SupplierID ? "selected" : "")>@item.SupplierName</option>
+                            <option value="@item.SupplierID" @Html.Raw(Model.SupplierID == item.SupplierID ? "selected" : "")>@item.SupplierName</option>
                         }
                     </select>
                 </div>
@@ -45,111 +46,23 @@
                 </div>
             </div>
         </form>
-
-        <p style="margin:10px 0 10px 0">
-            Có <strong>@Model.RowCount</strong> mặt hàng trong tổng số <strong>@Model.PageCount</strong> trang
-        </p>
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-striped">
-                <thead>
-                    <tr class="bg-primary">
-                        <th style="width:80px">Ảnh</th>
-                        <th>Tên mặt hàng</th>
-                        <th>Đơn vị tính</th>
-                        <th>Giá</th>
-                        <th style="width:75px">&nbsp;</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Products)
-                    {
-                        var p = (SV18T1021130.DomainModel.Product)HttpContext.Current.Session["product"];
-                        if (p != null && p.ProductID == item.ProductID)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            <tr>
-                                <td>
-                                    @if (string.IsNullOrEmpty(item.Photo))
-                                    {
-                                        <img src="/Images/Products/No-Image.png" style="width:80px; height: 80px" />
-                                    }
-                                    else
-                                    {
-                                        <img src="@item.Photo" style="width:80px; height: 80px" />
-                                    }
-
-                                </td>
-                                <td style="vertical-align:middle">@item.ProductName</td>
-                                <td style="vertical-align:middle">@item.Unit</td>
-                                <td style="vertical-align:middle">@item.Price</td>
-                                <td class="text-right" style="vertical-align:middle">
-                                    <a href="~/product/edit/@item.ProductID" class="btn btn-xs btn-flat btn-info">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="~/product/delete/@item.ProductID" class="btn btn-xs btn-flat btn-danger">
-                                        <i class="fa fa-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="box-footer text-center">
-        <ul class="pagination">
-            @for (int i = 1; i <= Model.PageCount; i++)
-            {
-                if (i == Model.Page)
-                {
-                    <li class="active"><a href="#">@i</a></li>
-                }
-                else
-                {
-                    <li><a href="~/product?page=@i&searchValue=@Model.SearchValue&category=@ViewBag.Category&supplier=@ViewBag.Supplier">@i</a></li>
-                }
-            }
-        </ul>
+        <div id="searchResult"></div>
     </div>
 </div>
-@if (Session["product"] != null)
-{
-    var p = (SV18T1021130.DomainModel.Product)HttpContext.Current.Session["product"];
+@section scripts {
     <script>
-        var tbody = document.querySelector('tbody').innerHTML;
-        var tr = `
-            <tr>
-                <td>
-                    @if (string.IsNullOrEmpty(p.Photo))
-                    {
-                        <img src="/Images/Products/No-Image.png" style="width:80px; height: 80px" />
-                    }
-                    else
-                    {
-                        <img src="@p.Photo" style="width:80px; height: 80px" />
-                    }
+        $(document).ready(function () {
+            doSearch(@Model.Page);
+            $("#searchInput").submit(function (e) {
+                e.preventDefault();
+                var search = $("input[name='searchValue']").val()
+                if (search !== "") {
+                    $("input[name='searchValue']").val(search.trim())
+                }
+                doSearch(1);
+                return false;
+            })
+        });
 
-                </td>
-                <td style="vertical-align:middle">@p.ProductName</td>
-                <td style="vertical-align:middle">@p.Unit</td>
-                <td style="vertical-align:middle">@p.Price</td>
-                <td class="text-right" style="vertical-align:middle">
-                    <a href="/product/edit/@p.ProductID" class="btn btn-xs btn-flat btn-info">
-                        <i class="fa fa-edit"></i>
-                    </a>
-                    <a href="/product/delete/@p.ProductID" class="btn btn-xs btn-flat btn-danger">
-                        <i class="fa fa-remove"></i>
-                    </a>
-                </td>
-            </tr>`
-        document.querySelector('tbody').innerHTML = tr + tbody;
     </script>
-    Session.Remove("product");
 }

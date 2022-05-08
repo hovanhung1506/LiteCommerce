@@ -24,7 +24,10 @@
                 <tr>
                     <td>@item.CategoryName</td>
                     <td>@item.Description</td>
-                    <td class="text-right">
+                    <td class="text-right" style="width: 93px">
+                        <a href="javascript:;" onclick="window.location.href = '/product/category/@item.CategoryID'" class="btn btn-xs btn-flat btn-default">
+                            <i class="fa fa-list-ul"></i>
+                        </a>
                         <a href="~/category/edit/@item.CategoryID" class="btn btn-xs btn-flat btn-info">
                             <i class="fa fa-edit"></i>
                         </a>

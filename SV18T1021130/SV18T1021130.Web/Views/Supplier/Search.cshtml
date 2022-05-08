@@ -20,7 +20,7 @@
                 <th>Thành phố</th>
                 <th>Mã bưu chính</th>
                 <th>Số điện thoại</th>
-                <th style="width:75px">&nbsp;</th>
+                <th style="width:93px">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -35,6 +35,9 @@
                     <td>@item.PostalCode</td>
                     <td>@item.Phone</td>
                     <td class="text-right">
+                        <a href="javascript:;" onclick="window.location.href='/product/supplier/@item.SupplierID'" class="btn btn-xs btn-flat btn-default">
+                            <i class="fa fa-list-ul"></i>
+                        </a>
                         <a href="~/supplier/edit/@item.SupplierID" class="btn btn-xs btn-flat btn-info">
                             <i class="fa fa-edit"></i>
                         </a>

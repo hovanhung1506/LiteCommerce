@@ -26,7 +26,7 @@ namespace SV18T1021130.Web.Controllers
         public ActionResult Index(int page = 1, string searchValue = "")
         {
             PaginationSearchInput model = Session["CUSTOMER_SEARCH"] as PaginationSearchInput;
-            if(model == null)
+            if (model == null)
             {
                 model = new PaginationSearchInput()
                 {
@@ -46,8 +46,6 @@ namespace SV18T1021130.Web.Controllers
         public ActionResult Search(Models.PaginationSearchInput input)
         {
             int rowCount = 0;
-            //if (input.SearchValue != null)
-            //    input.SearchValue =  input.SearchValue.Trim();
             var data = CommonDataService.ListOfCustomers(input.Page, input.PageSize, input.SearchValue, out rowCount);
             Models.CustomerPaginationResultModel model = new Models.CustomerPaginationResultModel
             {
@@ -81,7 +79,7 @@ namespace SV18T1021130.Web.Controllers
         /// <param name="customerID"></param>
         /// <returns></returns>
         [Route("edit/{customerID}")]
-        public ActionResult Edit(string  customerID)
+        public ActionResult Edit(string customerID)
         {
             int id = 0;
             try
@@ -132,21 +130,20 @@ namespace SV18T1021130.Web.Controllers
             if (model.CustomerID > 0)
             {
                 CommonDataService.UpdateCustomer(model);
+                model = CommonDataService.GetCustomer(model.CustomerID);
             }
             else
             {
                 CommonDataService.AddCustomer(model);
-                Models.PaginationSearchInput input = new PaginationSearchInput()
-                {
-                    Page = 1,
-                    PageSize = 10,
-                    SearchValue = model.CustomerName
-                };
-                Session["CUSTOMER_SEARCH"] = input;
             }
-                
+            Models.PaginationSearchInput input = new PaginationSearchInput()
+            {
+                Page = 1,
+                PageSize = 10,
+                SearchValue = model.CustomerName
+            };
+            Session["CUSTOMER_SEARCH"] = input;
             return RedirectToAction("Index");
-
         }
 
         /// <summary>
@@ -177,6 +174,6 @@ namespace SV18T1021130.Web.Controllers
             return View(model);
         }
 
-        
+
     }
 }

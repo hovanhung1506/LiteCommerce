@@ -31,6 +31,10 @@
             doSearch(@Model.Page);
             $("#searchInput").submit(function (e) {
                 e.preventDefault();
+                var search = $("input[name='searchValue']").val()
+                if (search !== "") {
+                    $("input[name='searchValue']").val(search.trim())
+                }
                 doSearch(1);
                 return false;
             })

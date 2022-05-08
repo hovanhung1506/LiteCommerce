@@ -122,9 +122,17 @@ namespace SV18T1021130.Web.Controllers
             if (model.SupplierID > 0)
             {
                 CommonDataService.UpdateSupplier(model);
+                model = CommonDataService.GetSupplier(model.SupplierID);
             }
             else
                 CommonDataService.AddSupplier(model);
+            PaginationSearchInput input = new PaginationSearchInput()
+            {
+                Page = 1,
+                PageSize = 10,
+                SearchValue = model.SupplierName
+            };
+            Session["SUPPLIER_SEARCH"] = input;
             return RedirectToAction("Index");
         }
 
