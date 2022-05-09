@@ -264,8 +264,20 @@ namespace SV18T1021130.Web.Controllers
                 }
             if (uploadPhoto == null && model.ProductID == 0)
                 ModelState.AddModelError("Photo", "Ảnh không được để trống");
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid && model.ProductID == 0)
                 return View("Create", model);
+            if(!ModelState.IsValid && model.ProductID > 0)
+            {
+                var productPhotos = CommonProductService.ListOfProductPhotos(model.ProductID);
+                var productAttributes = CommonProductService.ListOfProductAttributes(model.ProductID);
+                Models.ProductResultModel prs = new Models.ProductResultModel
+                {
+                    product = model,
+                    productAttributes = productAttributes,
+                    productPhotos = productPhotos
+                };
+                return View("Edit", prs);
+            }
             if (uploadPhoto != null)
             {
                 string path = Server.MapPath("~/Images/Products");
