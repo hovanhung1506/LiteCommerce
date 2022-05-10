@@ -37,6 +37,11 @@ namespace SV18T1021130.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Tìm kiếm phân trang
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public ActionResult Search(Models.PaginationSearchInput input)
         {
             int rowCount = 0;
@@ -54,7 +59,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Bổ sung 1 nhân viên
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
@@ -68,7 +73,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Chỉnh sửa 1 nhân viên
         /// </summary>
         /// <param name="employeeID"></param>
         /// <returns></returns>
@@ -93,7 +98,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Xóa 1 nhân viên
         /// </summary>
         /// <param name="employeeID"></param>
         /// <returns></returns>
@@ -146,10 +151,24 @@ namespace SV18T1021130.Web.Controllers
             }
             catch
             {
-                ModelState.AddModelError("BirthDate", "Ngày sinh " + birthDateString + " không hợp lệ ");
+                ModelState.AddModelError("BirthDate", $"Ngày sinh {birthDateString} không hợp lệ ");
             }
             if (string.IsNullOrEmpty(model.Email))
                 ModelState.AddModelError("Email", "Email không được để trống");
+            if (!string.IsNullOrEmpty(model.Email))
+            {
+                int rowCount = 0;
+                var list = CommonDataService.ListOfEmployees(1, 0, "", out rowCount);
+                foreach(var item in list)
+                {
+                    if(item.Email.ToLower().Equals(model.Email.ToLower()) && (model.EmployeeID == 0 || model.EmployeeID != item.EmployeeID))
+                    {
+                        ModelState.AddModelError("Email", $"Email {model.Email} đã được sử dụng");
+                        break;
+                    }
+                }
+            }
+                
             if (string.IsNullOrEmpty(model.Notes))
                 model.Notes = "";
             if (uploadPhoto == null && model.EmployeeID == 0)

@@ -36,6 +36,11 @@ namespace SV18T1021130.Web.Controllers
             return View(model);
         }
 
+        /// <summary>
+        /// Tìm kiếm phân trang
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public ActionResult Search(Models.PaginationSearchInput input)
         {
             int rowCount = 0;
@@ -53,7 +58,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Bổ sung 1 nhà cung cấp
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
@@ -68,7 +73,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Chỉnh sửa 1 nhà cung cấp
         /// </summary>
         /// <param name="supplierID"></param>
         /// <returns></returns>
@@ -137,7 +142,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Xóa 1 nhà cung cấp
         /// </summary>
         /// <param name="supplierID"></param>
         /// <returns></returns>

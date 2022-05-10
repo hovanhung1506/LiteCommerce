@@ -11,13 +11,17 @@ namespace SV18T1021130.DataLayer.SQLServer
 {
     public class CategoryDAL : BaseDAL, ICommonDAL<Category>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="connectionString"></param>
         public CategoryDAL (string connectionString) : base(connectionString)
         {
             
         }
 
         /// <summary>
-        /// 
+        /// Bổ sung 1 loại hàng
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -40,7 +44,7 @@ namespace SV18T1021130.DataLayer.SQLServer
             return result;
         }
         /// <summary>
-        /// 
+        /// Đếm số loại hàng
         /// </summary>
         /// <param name="searchValue"></param>
         /// <returns></returns>
@@ -66,7 +70,7 @@ namespace SV18T1021130.DataLayer.SQLServer
         }
 
         /// <summary>
-        /// 
+        /// Xóa 1 loại hàng
         /// </summary>
         /// <param name="categoryID"></param>
         /// <returns></returns>
@@ -87,7 +91,7 @@ namespace SV18T1021130.DataLayer.SQLServer
         }
 
         /// <summary>
-        /// 
+        /// Lấy ra 1 loại hàng
         /// </summary>
         /// <param name="categoryID"></param>
         /// <returns></returns>
@@ -115,7 +119,7 @@ namespace SV18T1021130.DataLayer.SQLServer
         }
 
         /// <summary>
-        /// 
+        /// Kiểm tra 1 loại hàng có dữ liệu liên quan hay không
         /// </summary>
         /// <param name="categoryID"></param>
         /// <returns></returns>
@@ -136,7 +140,7 @@ namespace SV18T1021130.DataLayer.SQLServer
         }
 
         /// <summary>
-        /// 
+        /// Lấy ra danh sách loại hàng
         /// </summary>
         /// <returns></returns>
         public IList<Category> List(int page, int pageSize, string searchValue)
@@ -185,7 +189,7 @@ namespace SV18T1021130.DataLayer.SQLServer
         }
 
         /// <summary>
-        /// 
+        /// Chỉnh sửa 1 lại hàng
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>

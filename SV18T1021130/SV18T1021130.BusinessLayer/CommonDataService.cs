@@ -78,6 +78,7 @@ namespace SV18T1021130.BusinessLayer
 
 
 
+
         /// <summary>
         /// Lấy danh sách các loại hàng
         /// </summary>
@@ -142,6 +143,7 @@ namespace SV18T1021130.BusinessLayer
         {
             return categoryDB.InUsed(categoryID);
         }
+
 
 
 
@@ -332,6 +334,11 @@ namespace SV18T1021130.BusinessLayer
                 return false;
             return shipperDB.Delete(shipperID);
         }
+        /// <summary>
+        /// Kiểm tra 1 người giao hàng có thông tin liên quan hay không
+        /// </summary>
+        /// <param name="shipperID"></param>
+        /// <returns></returns>
         public static bool InUsedShipper(int shipperID)
         {
             return shipperDB.InUsed(shipperID);
@@ -401,6 +408,6 @@ namespace SV18T1021130.BusinessLayer
         {
             return employeeDB.InUsed(employeeID);
         }
-        
+
     }    
 }

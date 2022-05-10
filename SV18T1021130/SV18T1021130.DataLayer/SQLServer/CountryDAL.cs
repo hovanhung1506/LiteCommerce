@@ -22,7 +22,7 @@ namespace SV18T1021130.DataLayer.SQLServer
         }
 
         /// <summary>
-        /// 
+        /// Lấy ra danh sách các quốc gia
         /// </summary>
         /// <returns></returns>
         public IList<Country> List()

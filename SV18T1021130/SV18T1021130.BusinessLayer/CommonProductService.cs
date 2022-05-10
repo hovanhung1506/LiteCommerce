@@ -32,7 +32,7 @@ namespace SV18T1021130.BusinessLayer
         }
 
         /// <summary>
-        /// 
+        /// Lấy ra danh sách các mặt hàng
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
@@ -46,7 +46,7 @@ namespace SV18T1021130.BusinessLayer
             return productDB.List(page, pageSize, categoryID, supplierID, searchValue).ToList();
         }
         /// <summary>
-        /// 
+        /// Lấy ra 1 mặt hàng
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
@@ -55,7 +55,7 @@ namespace SV18T1021130.BusinessLayer
             return productDB.Get(productID);
         }
         /// <summary>
-        /// 
+        /// Bổ sung 1 mặt hàng
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -64,7 +64,7 @@ namespace SV18T1021130.BusinessLayer
             return productDB.Add(data);
         }
         /// <summary>
-        /// 
+        /// Chỉnh sửa 1 mặt hàng
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -73,7 +73,7 @@ namespace SV18T1021130.BusinessLayer
             return productDB.Update(data);
         }
         /// <summary>
-        /// 
+        /// Xóa 1 mặt hàng
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
@@ -84,7 +84,7 @@ namespace SV18T1021130.BusinessLayer
             return productDB.Delete(productID);
         }
         /// <summary>
-        /// 
+        /// Kiểm tra xem 1 mặt hàng có dữ liệu liên quan hay không
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
@@ -97,7 +97,7 @@ namespace SV18T1021130.BusinessLayer
 
 
         /// <summary>
-        /// 
+        /// Lấy ra danh sách thư viên ảnh của 1 mặt hàng
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
@@ -106,7 +106,7 @@ namespace SV18T1021130.BusinessLayer
             return productPhotoDB.List(productID).ToList();
         }
         /// <summary>
-        /// 
+        /// Lấy ra 1 ảnh
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
@@ -115,7 +115,7 @@ namespace SV18T1021130.BusinessLayer
             return productPhotoDB.Get(productID, photoID);
         }
         /// <summary>
-        /// 
+        /// Bổ sung 1 ảnh mới
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -124,7 +124,7 @@ namespace SV18T1021130.BusinessLayer
             return productPhotoDB.Add(data);
         }
         /// <summary>
-        /// 
+        /// Chỉnh sửa 1 ảnh
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -133,7 +133,7 @@ namespace SV18T1021130.BusinessLayer
             return productPhotoDB.Update(data);
         }
         /// <summary>
-        /// 
+        /// Xóa 1 ảnh
         /// </summary>
         /// <param name="PhotoID"></param>
         /// <returns></returns>
@@ -146,7 +146,7 @@ namespace SV18T1021130.BusinessLayer
 
 
         /// <summary>
-        /// 
+        /// Lấy ra danh sách thuộc tính của 1 mặt hàng
         /// </summary>
         /// <param name="ProductID"></param>
         /// <returns></returns>
@@ -155,7 +155,7 @@ namespace SV18T1021130.BusinessLayer
             return productAttributeDB.List(productID).ToList();
         }
         /// <summary>
-        /// 
+        /// Bổ sung 1 thuộc tính
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -164,7 +164,7 @@ namespace SV18T1021130.BusinessLayer
             return productAttributeDB.Add(data);
         }
         /// <summary>
-        /// 
+        /// Lấy ra 1 thuộc tính
         /// </summary>
         /// <param name="ProductID"></param>
         /// <returns></returns>
@@ -173,7 +173,7 @@ namespace SV18T1021130.BusinessLayer
             return productAttributeDB.Get(productID, attributeID);
         }
         /// <summary>
-        /// 
+        /// Chỉnh sửa 1 thuộc tính
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -182,7 +182,7 @@ namespace SV18T1021130.BusinessLayer
             return productAttributeDB.Update(data);
         }
         /// <summary>
-        /// 
+        /// Xóa 1 thuộc tính
         /// </summary>
         /// <param name="AttributeID"></param>
         /// <returns></returns>

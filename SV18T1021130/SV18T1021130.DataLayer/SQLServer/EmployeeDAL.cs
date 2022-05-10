@@ -169,14 +169,12 @@ namespace SV18T1021130.DataLayer.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"SELECT *
-                                    FROM (SELECT EmployeeID, LastName, FirstName, BirthDate, Photo, Notes, Email, Password,
-                                                 ROW_NUMBER() OVER (ORDER BY FirstName) AS RowNumber
+                                    FROM (SELECT EmployeeID, LastName, FirstName, BirthDate, Photo, Notes, Email, Password, ROW_NUMBER() OVER (ORDER BY FirstName) AS RowNumber
                                           FROM Employees
                                           WHERE (@searchValue = N'')
                                                 OR ((Email LIKE @searchValue)
                                                     OR (FirstName + N' ' + LastName LIKE @searchValue))) AS t
-                                    WHERE t.RowNumber
-                                    BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize
+                                    WHERE (@pageSize = 0) OR (t.RowNumber BETWEEN (@page - 1) * @pageSize + 1 AND @page * @pageSize)
                                     ORDER BY t.RowNumber;";
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Connection = cn;

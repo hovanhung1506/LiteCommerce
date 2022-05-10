@@ -49,7 +49,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Tìm kiếm phân trang
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -70,7 +70,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Bổ sung 1 mặt hàng
         /// </summary>
         /// <returns></returns>
         public ActionResult Create()
@@ -83,7 +83,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Chỉnh sửa 1 mặt hàng
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
@@ -112,7 +112,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Xóa 1 mặt hàng
         /// </summary>
         /// <param name="productID"></param>
         /// <returns></returns>
@@ -161,7 +161,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Thêm, sửa, xóa thư viện ảnh của 1 mặt hàng
         /// </summary>
         /// <param name="method"></param>
         /// <param name="productID"></param>
@@ -202,7 +202,7 @@ namespace SV18T1021130.Web.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Thêm, sửa, xóa thuộc tính mặt hàng của 1 mặt hàng
         /// </summary>
         /// <param name="method"></param>
         /// <param name="productID"></param>
