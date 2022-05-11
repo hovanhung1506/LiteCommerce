@@ -8,3 +8,4 @@ E:\csharp\LiteCommerce\SV18T1021130\SV18T1021130.DomainModel\bin\Debug\SV18T1021
 E:\csharp\LiteCommerce\SV18T1021130\SV18T1021130.DomainModel\obj\Debug\SV18T1021130.DomainModel.csproj.CoreCompileInputs.cache
 E:\csharp\LiteCommerce\SV18T1021130\SV18T1021130.DomainModel\obj\Debug\SV18T1021130.DomainModel.dll
 E:\csharp\LiteCommerce\SV18T1021130\SV18T1021130.DomainModel\obj\Debug\SV18T1021130.DomainModel.pdb
+E:\csharp\LiteCommerce\SV18T1021130\SV18T1021130.DomainModel\obj\Debug\SV18T1021130.DomainModel.csproj.AssemblyReference.cache

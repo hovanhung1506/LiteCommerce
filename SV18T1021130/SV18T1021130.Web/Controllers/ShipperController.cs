@@ -116,10 +116,7 @@ namespace SV18T1021130.Web.Controllers
                 return View("Create", model);
             }
             if (model.ShipperID > 0)
-            {
                 CommonDataService.UpdateShipper(model);
-                model = CommonDataService.GetShipper(model.ShipperID);
-            }
             else
                 CommonDataService.AddShipper(model);
             Models.PaginationSearchInput input = new PaginationSearchInput()

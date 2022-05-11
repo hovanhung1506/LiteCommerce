@@ -32,5 +32,15 @@ namespace SV18T1021130.DomainModel
         /// 
         /// </summary>
         public string Photo { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int CategoryID { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int SupplierID { get; set; }
     }
 }

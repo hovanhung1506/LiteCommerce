@@ -130,7 +130,7 @@ namespace SV18T1021130.Web.Controllers
             if (model.CustomerID > 0)
             {
                 CommonDataService.UpdateCustomer(model);
-                model = CommonDataService.GetCustomer(model.CustomerID);
+                //model = CommonDataService.GetCustomer(model.CustomerID);
             }
             else
             {

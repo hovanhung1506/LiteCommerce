@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SV18T1021130.BusinessLayer;
+using SV18T1021130.DomainModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -32,9 +34,12 @@ namespace SV18T1021130.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string username, string password)
         {
-            if(username == "admin@abc.com" && password == "1")
+            username = username.ToLower();
+            Employee employee = CommonAccountService.Login(username, password);
+            if (employee != null)
             {
                 System.Web.Security.FormsAuthentication.SetAuthCookie(username, false);
+                Session["account"] = employee;
                 return RedirectToAction("Index", "Home");
             }
 
@@ -57,8 +62,34 @@ namespace SV18T1021130.Web.Controllers
         /// 
         /// </summary>
         /// <returns></returns>
-        public ActionResult ChangePassword()
+        public ActionResult ChangePassword(string oldPassword, string newPassword, string comfirmPassword)
         {
+            if (Request.HttpMethod == "POST")
+            {
+                Employee employee = Session["account"] as Employee;
+                //if (employee == null)
+                //    return RedirectToAction("Logout");
+                if (string.IsNullOrEmpty(oldPassword))
+                    ModelState.AddModelError("oldPassword", "Nhập mật khẩu cũ");
+                if (string.IsNullOrEmpty(newPassword))
+                    ModelState.AddModelError("newPassword", "Nhập mật khẩu mới");
+                if (string.IsNullOrEmpty(comfirmPassword))
+                    ModelState.AddModelError("comfirmPassword", "Nhập lại mật khẩu mới");
+                if(!string.IsNullOrEmpty(newPassword) && ! string.IsNullOrEmpty(comfirmPassword))
+                    if (newPassword != comfirmPassword)
+                        ModelState.AddModelError("comfirmPassword", "Mật khẩu mới và mật khẩu nhập lại không trùng khớp");
+                if (!string.IsNullOrEmpty(oldPassword))
+                {
+                    bool checkPassword = CommonAccountService.CheckPassword(employee.Email, oldPassword);
+                    if (!checkPassword)
+                        ModelState.AddModelError("oldPassword", "Mật khẩu cũ không đúng");
+                }
+
+                if (!ModelState.IsValid)
+                    return View();
+                CommonAccountService.ChangePassword(employee.Email, newPassword);
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
     }

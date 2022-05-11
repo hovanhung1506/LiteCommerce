@@ -75,10 +75,20 @@ namespace SV18T1021130.Web.Controllers
         /// <returns></returns>
         public ActionResult Create()
         {
-            Product model = new Product()
+            //Product model = new Product()
+            //{
+            //    ProductID = 0
+            //};
+            ProductCreate model = new ProductCreate()
             {
-                ProductID = 0
+                product = new Product()
+                {
+                    ProductID = 0
+                }
             };
+            int rowCount = 0;
+            model.categories = CommonDataService.ListOfCategories(1, 0, "", out rowCount);
+            model.suppliers = CommonDataService.ListOfSuppliers(1, 0, "", out rowCount);
             return View(model);
         }
 
@@ -102,11 +112,16 @@ namespace SV18T1021130.Web.Controllers
             var product = CommonProductService.GetProduct(id);
             var productPhotos = CommonProductService.ListOfProductPhotos(id);
             var productAttributes = CommonProductService.ListOfProductAttributes(id);
+            int rowCount = 0;
+            var c = CommonDataService.ListOfCategories(1, 0, "", out rowCount);
+            var s = CommonDataService.ListOfSuppliers(1, 0, "", out rowCount);
             Models.ProductResultModel model = new Models.ProductResultModel
             {
                 product = product,
                 productAttributes = productAttributes,
-                productPhotos = productPhotos
+                productPhotos = productPhotos,
+                categories = c,
+                suppliers = s
             };
             return View("Edit", model);
         }
@@ -262,19 +277,41 @@ namespace SV18T1021130.Web.Controllers
                 {
                     ModelState.AddModelError("Price", "Giá không hợp lệ");
                 }
+            if (model.CategoryID < 1)
+                ModelState.AddModelError("CategoryID", "Chọn loại hàng");
+            if (model.SupplierID < 1)
+                ModelState.AddModelError("SupplierID", "Chọn nhà cung cấp");
             if (uploadPhoto == null && model.ProductID == 0)
                 ModelState.AddModelError("Photo", "Ảnh không được để trống");
             if (!ModelState.IsValid && model.ProductID == 0)
-                return View("Create", model);
-            if(!ModelState.IsValid && model.ProductID > 0)
+            {
+                ProductCreate pr = new ProductCreate()
+                {
+                    product = new Product()
+                    {
+                        ProductID = 0
+                    }
+                };
+                int rowCount = 0;
+                pr.categories = CommonDataService.ListOfCategories(1, 0, "", out rowCount);
+                pr.suppliers = CommonDataService.ListOfSuppliers(1, 0, "", out rowCount);
+                return View("Create", pr);
+            }
+                
+            if (!ModelState.IsValid && model.ProductID > 0)
             {
                 var productPhotos = CommonProductService.ListOfProductPhotos(model.ProductID);
                 var productAttributes = CommonProductService.ListOfProductAttributes(model.ProductID);
+                int rowCount = 0;
+                var c = CommonDataService.ListOfCategories(1, 0, "", out rowCount);
+                var s = CommonDataService.ListOfSuppliers(1, 0, "", out rowCount);
                 Models.ProductResultModel prs = new Models.ProductResultModel
                 {
                     product = model,
                     productAttributes = productAttributes,
-                    productPhotos = productPhotos
+                    productPhotos = productPhotos,
+                    categories = c,
+                    suppliers = s
                 };
                 return View("Edit", prs);
             }

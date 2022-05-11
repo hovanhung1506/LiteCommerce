@@ -116,14 +116,10 @@ namespace SV18T1021130.Web.Controllers
                 return View("Create", model);
             }
             if (model.CategoryID > 0)
-            {
                 CommonDataService.UpdateCategory(model);
-                model = CommonDataService.GetCategory(model.CategoryID);
-            }
             else
-            {
                 CommonDataService.AddCategory(model);
-            }
+            
             Models.PaginationSearchInput input = new PaginationSearchInput()
             {
                 Page = 1,

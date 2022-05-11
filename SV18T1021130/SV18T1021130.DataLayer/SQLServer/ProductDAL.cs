@@ -30,7 +30,7 @@ namespace SV18T1021130.DataLayer.SQLServer
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.CommandText = @"INSERT INTO dbo.Products (ProductName, SupplierID, CategoryID, Unit, Price, Photo)
-                                    VALUES (@productName, DEFAULT, DEFAULT, @unit, @price, @photo)
+                                    VALUES (@productName, @supplierID, @categoryID, @unit, @price, @photo)
                                     SELECT SCOPE_IDENTITY()";
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Connection = cn;
@@ -38,6 +38,8 @@ namespace SV18T1021130.DataLayer.SQLServer
                 cmd.Parameters.AddWithValue("@unit", data.Unit);
                 cmd.Parameters.AddWithValue("@price", data.Price);
                 cmd.Parameters.AddWithValue("@photo", data.Photo);
+                cmd.Parameters.AddWithValue("@supplierID", data.SupplierID);
+                cmd.Parameters.AddWithValue("@categoryID", data.CategoryID);
                 result = Convert.ToInt32(cmd.ExecuteScalar());
                 cn.Close();
             }
@@ -119,6 +121,8 @@ namespace SV18T1021130.DataLayer.SQLServer
                     product.Unit = Convert.ToString(dbReader["Unit"]);
                     product.Price = Convert.ToString(dbReader["Price"]).Substring(0, Convert.ToString(dbReader["Price"]).Length - 2);
                     product.Photo = Convert.ToString(dbReader["Photo"]);
+                    product.CategoryID = Convert.ToInt32(dbReader["CategoryID"]);
+                    product.SupplierID = Convert.ToInt32(dbReader["SupplierID"]);
                 }
                 dbReader.Close();
                 cn.Close();
@@ -190,7 +194,9 @@ namespace SV18T1021130.DataLayer.SQLServer
                         ProductName = Convert.ToString(dbReader["ProductName"]),
                         Unit = Convert.ToString(dbReader["Unit"]),
                         Price = Convert.ToString(dbReader["Price"]).Substring(0, Convert.ToString(dbReader["Price"]).Length - 2),
-                        Photo = Convert.ToString(dbReader["Photo"])
+                        Photo = Convert.ToString(dbReader["Photo"]),
+                        CategoryID = Convert.ToInt32(dbReader["CategoryID"]),
+                        SupplierID = Convert.ToInt32(dbReader["SupplierID"])
                     });
                 }
                 dbReader.Close();
@@ -210,7 +216,7 @@ namespace SV18T1021130.DataLayer.SQLServer
             using(SqlConnection cn = OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = @"UPDATE dbo.Products SET ProductName = @productName, Unit = @unit, Price = @price, Photo = @photo
+                cmd.CommandText = @"UPDATE dbo.Products SET ProductName = @productName, Unit = @unit, Price = @price, Photo = @photo, CategoryID = @categoryID, SupplierID = @supplierID
                                     WHERE ProductID = @productID";
                 cmd.CommandType = System.Data.CommandType.Text;
                 cmd.Connection = cn;
@@ -219,6 +225,8 @@ namespace SV18T1021130.DataLayer.SQLServer
                 cmd.Parameters.AddWithValue("@photo", data.Photo);
                 cmd.Parameters.AddWithValue("@productID", data.ProductID);
                 cmd.Parameters.AddWithValue("@price", data.Price);
+                cmd.Parameters.AddWithValue("@categoryID", data.CategoryID);
+                cmd.Parameters.AddWithValue("@supplierID", data.SupplierID);
                 result = cmd.ExecuteNonQuery() > 0;
                 cn.Close();
             }

@@ -138,6 +138,7 @@
     <Compile Include="Models\EmployeePaginationResultModel.cs" />
     <Compile Include="Models\PaginationResultModel.cs" />
     <Compile Include="Models\PaginationSearchInput.cs" />
+    <Compile Include="Models\ProductCreate.cs" />
     <Compile Include="Models\ProductPaginationResultModel.cs" />
     <Compile Include="Models\ProductResultModel.cs" />
     <Compile Include="Models\ProductSearchInput.cs" />

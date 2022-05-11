@@ -206,7 +206,7 @@ namespace SV18T1021130.Web.Controllers
                     }
                 }
                 CommonDataService.UpdateEmployee(model);
-                model = CommonDataService.GetEmployee(model.EmployeeID);
+                //model = CommonDataService.GetEmployee(model.EmployeeID);
             }
             Models.PaginationSearchInput input = new PaginationSearchInput()
             {

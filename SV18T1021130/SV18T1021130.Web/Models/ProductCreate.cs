@@ -6,11 +6,9 @@ using System.Web;
 
 namespace SV18T1021130.Web.Models
 {
-    public class ProductResultModel
+    public class ProductCreate
     {
         public Product product { get; set; }
-        public List<ProductPhoto> productPhotos { get; set; }
-        public List<ProductAttribute> productAttributes { get; set; }
         public List<Category> categories { get; set; }
         public List<Supplier> suppliers { get; set; }
     }
