@@ -14,6 +14,12 @@ namespace SV18T1021130.DataLayer.SQLServer
         {
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="newPassword"></param>
+        /// <returns></returns>
         public bool ChangePassword(string email, string newPassword)
         {
             bool result = false;
@@ -31,6 +37,12 @@ namespace SV18T1021130.DataLayer.SQLServer
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="oldPassword"></param>
+        /// <returns></returns>
         public bool CheckPassword(string email, string oldPassword)
         {
             bool result = false;
@@ -48,6 +60,12 @@ namespace SV18T1021130.DataLayer.SQLServer
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public Employee Login(string email, string password)
         {
             Employee employee = null;

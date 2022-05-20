@@ -24,6 +24,7 @@ namespace SV18T1021130.Web.Controllers
         {
             return View();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -48,6 +49,7 @@ namespace SV18T1021130.Web.Controllers
             ViewBag.Message = "Đăng nhập thất bại";
             return View();
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -58,6 +60,7 @@ namespace SV18T1021130.Web.Controllers
             Session.Clear();
             return RedirectToAction("Login");
         }
+
         /// <summary>
         /// 
         /// </summary>
